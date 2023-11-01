@@ -80,6 +80,10 @@ export class CurlHelper {
 
     for(let param in this.request.params) {
       if({}.hasOwnProperty.call(this.request.params, param)) {
+        const value = this.request.params[param]
+        if (value === undefined) {
+          continue
+        }
         params +=
         i !== 0
           ? `&${param}=${this.request.params[param]}`

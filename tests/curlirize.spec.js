@@ -126,6 +126,19 @@ describe("Testing curlirize", () => {
       });
   });
 
+  it("do not add params that are undefined", (done) => {
+    axios.get("http://localhost:7500/", {params: {name: undefined, search: "hello"}})
+      .then((res) => {
+        expect(res.config.curlCommand).toBeDefined();
+        expect(res.config.curlCommand).toBe('curl -X GET "http://localhost:7500/?search=hello"');
+        done();
+      })
+      .catch((err) => {
+        console.log('--', err)
+        console.error(err);
+      });
+  });
+
   it("do not cut end slash", (done) => {
     const api = axios.create({
       baseURL: 'http://localhost:7500',
